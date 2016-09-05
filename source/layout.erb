@@ -85,19 +85,46 @@
       <article class="chapter">
         <h1>
           <%= page_title %>
-          <a href="https://github.com/emberjschina/guides/edit/master/source/localizable/<%= current_page.path.gsub('html', 'md') %>"
-             target="_blank" class="edit-page icon-pencil">Edit Page</a>
+          <a href="https://github.com/emberjschina/emberjs_guides_v2.7.0/edit/master/source/localizable/<%= current_page.path.gsub('html', 'md') %>"
+             target="_blank" class="edit-page icon-pencil">编辑</a>
         </h1>
         <hr>
+
+		<!-- 使用gsub方法把 .html替换为空 -->
+		英文原文：<a href="https://guides.emberjs.com/v2.7.0/<%= current_page.path.gsub('.html', '') %>" target="_blank">https://guides.emberjs.com/v2.7.0/<%= current_page.path.gsub('.html', '') %></a>
+
+		<br><br>
 
         <%= yield %>
 
 
+      <a href="http://www.ddlisting.com/donate.html" class="btn waves-effect waves-light b-green" 
+        target="_blank" style="border-radius: 4px; margin-top: 60px;margin-bottom: -60px; width: 100%;background: #F8E7CF;color:#865931;">¥我要小额赞助，鼓励作者写出更好的教程。</a>
+
         <%= chapter_links %>
+
+		<!-- 多说最新评论 start -->
+		<!--
+		<div class="ds-recent-comments ds-comment-list-style" data-num-items="15" data-show-avatars="1"
+			data-show-time="1" data-show-title="1" data-show-admin="1" data-excerpt-length="70"></div>
+		-->
+		<div class="ds-thread" data-thread-key="<%= current_page.path.gsub('html', 'md') %>" data-title="<%= current_page.data.title || full_page_title %>" data-url="http://emberjs.ddlisting.com/<%= current_page.path.gsub('html', 'md') %>"></div>
+		<!-- 多说最新评论 end -->
+		<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+		<script type="text/javascript">
+			var duoshuoQuery = {short_name:"emberteach"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+					|| document.getElementsByTagName('body')[0]).appendChild(ds);
+		 })();
+		</script>
+		<!-- 多说公共JS代码 end -->
       </article>
       
-      <a href="http://www.ddlisting.com/donate.html" class="btn waves-effect waves-light b-green" 
-        target="_blank" style="margin-top: 20px;margin-bottom: 20px; width: 100%;background: #F8E7CF;">¥我要小额赞助，鼓励作者写出更好的教程。</a>
     </main>
 
     <%= partial "footer" %>
