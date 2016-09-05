@@ -1,5 +1,3 @@
-英文原文：[https://guides.emberjs.com/v2.7.0/](https://guides.emberjs.com/v2.7.0/)
-
 # 翻译君在加班翻译ing……
 
 欢迎来到 Ember.js 指南！这份文档将会带领你从新手一直成长到 Ember 专家。
