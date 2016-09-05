@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Ember.js - <%= current_page.data.title || full_page_title %></title>
+    <meta property="st:title" content="<%= current_page.data.title || full_page_title %>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= favicon_tag 'images/favicon.png' %>
+    <!--[if lte IE 7 ]><%= stylesheet_link_tag "fonts/fontello-ie7" %><![endif]-->
+    <%= stylesheet_link_tag "application" %>
+
+    <!-- This TypeKit account is managed by @wifelette. Contact her with any issues. -->
+    <script src="https://use.typekit.net/stz3kpn.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+    <link href="/blog/feed.xml" rel="alternate" type="application/atom+xml" title="Ember.js - Blog" />
+    
+    <style type="text/css">
+    .waves-effect {
+      position: relative;
+      cursor: pointer;
+      display: inline-block;
+      overflow: hidden;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      vertical-align: middle;
+      z-index: 1;
+      will-change: opacity, transform;
+      -webkit-transition: all .3s ease-out;
+      -moz-transition: all .3s ease-out;
+      -o-transition: all .3s ease-out;
+      -ms-transition: all .3s ease-out;
+      transition: all .3s ease-out;
+    }
+    .btn, .btn-large {
+        text-decoration: none;
+        color: #fff;
+        background-color: #26a69a;
+        text-align: center;
+        letter-spacing: .5px;
+        -webkit-transition: .2s ease-out;
+        -moz-transition: .2s ease-out;
+        -o-transition: .2s ease-out;
+        -ms-transition: .2s ease-out;
+        transition: .2s ease-out;
+        cursor: pointer;
+    }
+    .btn, .btn-large, .btn-flat {
+        border: none;
+        border-radius: 2px;
+        display: inline-block;
+        height: 36px;
+        line-height: 36px;
+        outline: 0;
+        padding: 0 2rem;
+        text-transform: uppercase;
+        vertical-align: middle;
+        -webkit-tap-highlight-color: transparent;
+    }
+  </style>
+    
+    <%= yield_content :head %>
+  </head>
+
+  <body class="guides <%= page_classes %>">
+
+    <!--[if lt IE 9]>
+      <%= javascript_include_tag 'common-old-ie' %>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+      <%= javascript_include_tag 'common-modern' %>
+    <!--<![endif]-->
+
+    <%= partial "header" %>
+
+    <%= yield_content :outside_wrapper %>
+
+    <main class="container">
+      <%= partial "sidebar" %>
+
+      <article class="chapter">
+        <h1>
+          <%= page_title %>
+          <a href="https://github.com/emberjschina/guides/edit/master/source/localizable/<%= current_page.path.gsub('html', 'md') %>"
+             target="_blank" class="edit-page icon-pencil">Edit Page</a>
+        </h1>
+        <hr>
+
+        <%= yield %>
+
+
+        <%= chapter_links %>
+      </article>
+      
+      <a href="http://www.ddlisting.com/donate.html" class="btn waves-effect waves-light b-green" 
+        target="_blank" style="margin-top: 20px;margin-bottom: 20px; width: 100%;background: #F8E7CF;">¥我要小额赞助，鼓励作者写出更好的教程。</a>
+    </main>
+
+    <%= partial "footer" %>
+
+    <%= yield_content :foot %>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+      _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+      _gaq.push(['_setAccount', 'UA-27675533-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>
