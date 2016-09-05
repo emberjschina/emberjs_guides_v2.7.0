@@ -2,7 +2,7 @@
 
 使用`ember generate acceptance-test <name>`创建一个验收测试，比如:
 
-```
+```shell
 ember g acceptance-test login
 ```
 
@@ -169,7 +169,7 @@ export default Ember.Test.registerAsyncHelper('addContact',
 
 最后， 别忘了将你的测试助手添加进`tests/.jshintrc`和`tests/helpers/start-app.js`中、在`tests/.jshintrc`中，你需要将其添加进`predef`块中，不然就会得到jshint测试失败的消息.
 
-```
+```shell
 {
   "predef": [
     "document",
