@@ -169,7 +169,7 @@ export default Ember.Test.registerAsyncHelper('addContact',
 
 最后， 别忘了将你的测试助手添加进`tests/.jshintrc`和`tests/helpers/start-app.js`中、在`tests/.jshintrc`中，你需要将其添加进`predef`块中，不然就会得到jshint测试失败的消息.
 
-```json
+```
 {
   "predef": [
     "document",
@@ -181,7 +181,7 @@ export default Ember.Test.registerAsyncHelper('addContact',
     "addContact"
   ],
   ...
-}*
+}
 ```
 
 你需要在`tests/helpers/start-app.js`引入测试助手，这些助手将会被注册到应用中。
