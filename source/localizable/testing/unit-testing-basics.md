@@ -8,8 +8,7 @@
 
 创建一个简单的实例，实例内包含一个计算属性`computedFoo`，此计算属性依赖普通属性`foot`。
 
-```
-// app/models/some-thing.js
+```app/models/some-thing.js
 import Ember from 'ember';
 
 export default Ember.Object.extend({
