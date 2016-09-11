@@ -8,19 +8,17 @@ ember g acceptance-test login
 
 执行完毕命令之后得到如下文件内容：
 
-```javascript
-//tests/acceptance/login-test.js
-
+```tests/acceptance/login-test.js
 import { test } from 'qunit';
 import moduleForAcceptance from 'people/tests/helpers/module-for-acceptance';
 
 moduleForAcceptance('Acceptance | login');
 
-test('visting /login'， function(assert) {
+test('visiting /login', function(assert) {
   visit('/login');
 
   andThen(function() {
-  　assert.equal(currentURL()， '/login');
+    assert.equal(currentURL(), '/login');
   });
 });
 ```
@@ -31,12 +29,12 @@ test('visting /login'， function(assert) {
 
 举个例子:
 
-```javascript
-test('should add new post'， function(assert) {
+```tests/acceptance/new-post-appears-first-test.js
+test('should add new post', function(assert) {
   visit('/posts/new');
-  fillIn('input.title'， 'My new post');
+  fillIn('input.title', 'My new post');
   click('button.submit');
-  andThen(() => assert.equal(find('ul.posts li:first').text()， 'My new post'));
+  andThen(() => assert.equal(find('ul.posts li:first').text(), 'My new post'));
 });
 ```
 
@@ -89,15 +87,13 @@ Ember包含多个测试助来辅助进行验收测试。一共有2种类型:异�
 
  `andThen`测试助手将会等待所有异步测试助手完成之后再执行.举个例子:
  
- ```javascript
-//  tests/acceptance/new-post-appears-first-test.js
-
-tese('should add new post'， function(assert) {
+```tests/acceptance/new-post-appears-first-test.js
+test('should add new post', function(assert) {
   visit('/posts/new');
-  fillIn('input.title'， 'My new post');
+  fillIn('input.title', 'My new post');
   click('button.submit');
-  andThen(() => assert.equal(find('ul.posts li:first').text()， 'My new post'));
-  });
+  andThen(() => assert.equal(find('ul.posts li:first').text(), 'My new post'));
+});
 ```
 
 首先，我们访问`/posts/new`地址，在有`title`css类的`input`输入框内内填入内容“My new post”，然后点击有CSS类`submit`的按钮。
@@ -112,12 +108,12 @@ tese('should add new post'， function(assert) {
 
 下面的代码是执行命令`ember g test-helper shouldHaveElementWithCount`得到的测试例子:
 
-```javascript
-//tests/helpers/should-have-element-with-count.js
+```tests/helpers/should-have-element-with-count.js
+import Ember from 'ember';
 
 export default Ember.Test.registerAsyncHelper(
-    'shouldHaveElementWithCount'， function(app){}
-);
+    'shouldHaveElementWithCount', function(app) {
+});
 ```
 
 `Ember.Test.registerAsyncHelper`和`Ember.Test.registerHelper'是当`startApp`被调用时，会将自定义测试助手注册。两者的区别在于，前者`Ember.Test.registerHelper`会在之前任何的异步测试助手运行完成之后运行，并且后续的异步测试助手在运行前都会等待他完成.
@@ -126,55 +122,59 @@ export default Ember.Test.registerAsyncHelper(
 
 下面是一个非异步的测试助手:
 
-```javascript
-//tests/helpers/should-have-element-with-count.js
+```tests/helpers/should-have-element-with-count.js
+import Ember from 'ember';
 
-export default Ember.Test.registerHelper('shouldHaveElementWithCount'，
-  function(app， assert， selector， n， context){
-    const el = findWithAssert(selector， context);
+export default Ember.Test.registerHelper('shouldHaveElementWithCount',
+  function(app, assert, selector, n, context) {
+    const el = findWithAssert(selector, context);
     const count = el.length;
-    assert.equal(n， count， 'found ${count} times');
+    assert.equal(n, count, `found ${count} times`);
   }
 );
 
-//shouldHaveElementWithCount(assert， 'ul li'， 3);
+// shouldHaveElementWithCount(assert, 'ul li', 3);
 ```
 
 下面是一个异步的测试助手:
-```javascript
-export default Ember.Test.registerAsynHelper('dblclick'，
-  function(app， assert， selector， context){
-    let $el = findWithAssert(selector， context);
+
+```tests/helpers/dblclick.js
+import Ember from 'ember';
+
+export default Ember.Test.registerAsyncHelper('dblclick',
+  function(app, assert, selector, context) {
+    let $el = findWithAssert(selector, context);
     Ember.run(() => $el.dblclick());
   }
 );
 
-//dblclick(assert， '#persion-1')
+// dblclick(assert, '#person-1')
 ```
 
 异步测试助手也可以让你将多个测试助手合并为一个.举个例子:
 
-```javascript
-//tests/helpers/add-contact.js
+```tests/helpers/add-contact.js
+import Ember from 'ember';
+
 export default Ember.Test.registerAsyncHelper('addContact',
-  function(app，name) {
+  function(app, name) {
     fillIn('#name', name);
     click('button.create');
   }
 );
 
-//addContact('Bob');
-//addContact('Dan');
+// addContact('Bob');
+// addContact('Dan');
 ```
 
 最后， 别忘了将你的测试助手添加进`tests/.jshintrc`和`tests/helpers/start-app.js`中、在`tests/.jshintrc`中，你需要将其添加进`predef`块中，不然就会得到jshint测试失败的消息.
 
-```shell
+```tests/.jshintc
 {
   "predef": [
     "document",
     "window",
-    "locaiton",
+    "location",
     ...
     "shouldHaveElementWithCount",
     "dblclick",
@@ -186,11 +186,11 @@ export default Ember.Test.registerAsyncHelper('addContact',
 
 你需要在`tests/helpers/start-app.js`引入测试助手，这些助手将会被注册到应用中。
 
-```javascript
+```tests/helpers/start-app.js
 import Ember from 'ember';
 import Application from '../../app';
 import Router from '../../router';
-import config from '../../config/environmnet';
+import config from '../../config/environment';
 import './should-have-element-with-count';
 import './dblclick';
 import './add-contact';
