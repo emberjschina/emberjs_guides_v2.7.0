@@ -58,6 +58,12 @@
 
 .header-logo {
   a {
+        /* height: 40px; */
+    /* width: 100px; */
+    /* background: url(http://blog.ddlisting.com/content/images/2016/09/ember-logo1.png) no-repeat; */
+    display: block;
+    /* margin: -15px auto 0 auto; */
+    /*
     @include size(100px 40px);
     background: image-url("ember-logo.svg") no-repeat;
     display: block;
@@ -65,6 +71,7 @@
     @include media($large-screen) {
       margin-left: 0;
     }
+    */
   }
 }
 
