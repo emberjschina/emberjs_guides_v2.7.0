@@ -9,12 +9,13 @@
 创建一个简单的实例，实例内包含一个计算属性`computedFoo`，此计算属性依赖普通属性`foot`。
 
 ```
-//app/models/somt-thing.js
+// app/models/some-thing.js
+import Ember from 'ember';
 
 export default Ember.Object.extend({
   foo: 'bar',
 
-  computedFoo: Ember.compuuted('foo'，function() {
+  computedFoo: Ember.computed('foo', function() {
     const foo = this.get('foo');
     return `computed ${foo}`;
   })
@@ -23,19 +24,17 @@ export default Ember.Object.extend({
 
 在测试中，我们建立一个实例，然后更新属性`foo`的值（这个操作会触发计算属性`computedFoo`，使其自动更新），然后给出一个符合预期的`断言`:
 
-```
-//tests/unit/models/some-thing-test.js
+```tests/unit/models/some-thing-test.js
+import { moduleFor, test } from 'ember-qunit';
 
-import {moduleFor， test} from 'ember-qunit';
-
-moduleFor('model:some-thing'， 'Unit | some thing'， {
+moduleFor('model:some-thing', 'Unit | some thing', {
   unit: true
 });
 
-test('should correctly concat foo'， function(assert) {
+test('should correctly concat foo', function(assert) {
   const someThing = this.subject();
-  somtThing.set('foo'， 'baz');  //设置属性foo的值
-  assert.equal(someThing.get('computedFoo'), 'computed baz');  //断言，判断计算属性值是否相等于computed baz
+  someThing.set('foo', 'baz');
+  assert.equal(someThing.get('computedFoo'), 'computed baz');
 });
 ```
 
@@ -45,11 +44,11 @@ test('should correctly concat foo'， function(assert) {
 
 下面让我们来看一下如何测试对象方法的逻辑。在本例中对象内部有一个设置属性（更新属性`foo`值）值的方法`testMethod`。
 
-```
-//app/models/some-thing.js
+```app/models/some-thing.js
+import Ember from 'ember';
 
 export default Ember.Object.extend({
-  foo: 'bar'，
+  foo: 'bar',
   testMethod() {
     this.set('foo', 'baz');
   }
@@ -58,10 +57,8 @@ export default Ember.Object.extend({
 
 要对其进行测试，我们先创建如下实例，然后调用`testMethod`方法，然后用断言判断方法的调用结果是否是正确的。
 
-```
-//tests/unit/models/some-thing-test.js
-
-test('should update foo on testMethod'， function(assert) {
+```tests/unit/models/some-thing-test.js
+test('should update foo on testMethod', function(assert) {
   const someThing = this.subject();
   someThing.testMethod();
   assert.equal(someThing.get('foo'), 'baz');
@@ -70,8 +67,8 @@ test('should update foo on testMethod'， function(assert) {
 
 如果一个对象方法返回的是一个值，你可以很容易的给予断言进行判定是否正确。假设我们的对象拥有一个`calc`方法，方法的返回值是基于对象内部的状态值。代码如下：
 
-```
-//app/models/some-thing.js
+```app/models/some-thing.js
+import Ember from 'ember';
 
 export default Ember.Object.extend({
   count: 0,
@@ -85,10 +82,8 @@ export default Ember.Object.extend({
 
 在测试中需要调用`calc`方法，并且断言其返回值是否正确。
 
-```
-//tests/unit/models/some-thing-test.js
-
-test('should return incremented count on calc'， function(assert) {
+```tests/unit/models/some-thing-test.js
+test('should return incremented count on calc', function(assert) {
   const someThing = this.subject();
   assert.equal(someThing.calc(), 'count: 1');
   assert.equal(someThing.calc(), 'count: 2');
@@ -99,12 +94,12 @@ test('should return incremented count on calc'， function(assert) {
 
 假设我们有一个对象，这个对象拥有一些属性，并且有一个方法在监测着这些属性。
 
-```
-//app/models/some-thing.js
+```app/models/some-thing.js
+import Ember from 'ember';
 
 export default Ember.Object.extend({
-  foo: 'bar'
-  other: 'no',,
+  foo: 'bar',
+  other: 'no',
   doSomething: Ember.observer('foo', function() {
     this.set('other', 'yes');
   })
@@ -113,12 +108,10 @@ export default Ember.Object.extend({
 
 为了测试`doSomething`方法，我们创建一个`SomeThing`对象，更新`foo`属性值，然后进行断言是否达到预期结果。
 
-```
-//tests/unit/models/some-thing-test.js
-
-test('should set other prop to yes when foo changes'， function(assert) {
+```tests/unit/models/some-thing-test.js
+test('should set other prop to yes when foo changes', function(assert) {
   const someThing = this.subject();
   someThing.set('foo', 'baz');
   assert.equal(someThing.get('other'), 'yes');
- });
+});
 ```
