@@ -1,22 +1,10 @@
-_Unit testing methods and computed properties follows previous patterns shown 
-in [Unit Testing Basics] because Ember.Route extends Ember.Object._
+_路由测试遵循在前面章节[Unit Testing Basics]介绍的单元测试和计算属性测试方法，因为Ember.Route继承至Ember.Object。_
 
-Testing routes can be done both via acceptance or unit tests. Acceptance tests 
-will likely provide better coverage for routes because routes are typically used 
-to perform transitions and load data, both of which are tested more easily in 
-full context rather than isolation.
+测试路由可以通过接受或单元测试来完成。对于路由验收测试可能会提供更好覆盖测试，因为路由通常是用来执行转换和加载数据，这两者都在上下文中相对来说比孤立的测试（单元测试）更好。
 
-That being said, sometimes it is important to unit test your routes. For example, 
-let's say we'd like to have an alert that can be triggered from anywhere within 
-our application. The alert function `displayAlert` should be put into the 
-`ApplicationRoute` because all actions and events bubble up to it from 
-sub-routes and controllers.
+但是，有时单元测试对于路由来说是重要的。例如，我们希望有一个警报，从任何地方进入我们的应用程序都触发。警报方法`displayAlert`可以放入`ApplicationRoute`因为所有的行为和事件都会从子路由和子控制器冒泡到顶端的路由。
 
-> By default, Ember CLI does not generate a file for its application route.  To
-> extend the behavior of the ember application route we will run the command
-> `ember generate route application`.  Ember CLI does however generate an application
-> template, so when asked whether we want to overwrite `app/templates/application.hbs`
-> we will answer 'n'.
+> 默认情况下，Ember CLI不会生成路由`application`。为了能继承路由的行为可以使用命令`ember generate route application`创建。Ember CLI不仅会生成路由文件还会生成同名的模板文件，所以执行命令的时候会询问是否覆盖`app/templates/application.hbs`，输入“n”即可。
 
 ```app/routes/application.js
 export default Ember.Route.extend({
@@ -32,14 +20,16 @@ export default Ember.Route.extend({
 });
 ```
 
-In this route we've [separated our concerns](http://en.wikipedia.org/wiki/Separation_of_concerns):
+在路由中[separated our concerns](http://en.wikipedia.org/wiki/Separation_of_concerns):
 The action `displayAlert` contains the code that is called when the action is 
 received, and the private function `_displayAlert` performs the work. While not 
 necessarily obvious here because of the small size of the functions, separating 
 code into smaller chunks (or "concerns"), allows it to be more readily isolated 
 for testing, which in turn allows you to catch bugs more easily.
 
-Here is an example of how to unit test this route:
+在这个路由中我们已经分开关注点：当方法`displayAlert`接受到动作哦时候就会执行，并且会执行私有函数`_displayAlter`。虽然不一定是明显的，因为小规模的功能，分离代码成更小的块（或“关注”），让它更容易被孤立的测试，这反过来又让你更容易捕捉错误。
+
+下面是一个如何测试此路由的单元测试：
 
 ```tests/unit/routes/application-test.js
 import { moduleFor, test } from 'ember-qunit';
