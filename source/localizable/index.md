@@ -24,15 +24,24 @@
 
 * **ES2015 syntax**  Ember CLI 默认配备了Babel.js，于是你可以直接享用诸如箭头函数，模版字符串，解构等最新的语言特性。这部分的内容你可以查看[Babel.js documentation][babeljs]或阅读在线书籍[Understanding ECMAScript 6][es6]。
 
+## 报告问题（报告Ember Teach）
 
-## 报告问题
+如果你觉得翻译有问题，觉得非常差或者是错别字，内容缺漏，请你第一时间点击文章右上角“编辑”按钮提交您的意见。
+
+### 关注Ember Teach公众账号
+
+![微信公众账号](http://blog.ddlisting.com/content/images/2016/08/gongzonghanghao.jpg)
+
+微信扫一扫即可关注Ember Teach公众账号，我们会在第一时间把更新的内容发送给每个关注者。让你学习最新Ember.js总是快人一步。
+
+## 报告问题（报告Ember.js官方）
 
 错别字，内容缺漏，有错误的代码示例都是指南的 bugs，如果你有发现其中之一或是想要改进现有指南的话，我们非常乐意辅助你来帮助我们！
 
 常见的报告问题方式包括：
 
 * 点击每页右上角的铅笔图标
-* 在[the GitHub repository][gh-guides]提交issue 或者pull request。
+* 在[the GitHub repository][gh-guides]提交issue 或者pull request。注意：此提交会提交到Ember.js官方参考文档，并不是提交到Ember Teach。
 
 点击铅笔图标将会带你进入指南在 Github 上的编辑器，于是你可以使用 Markdown 标记语言直接开始编辑。这是用于纠正错别字，补充内容缺漏或修正代码示例中错误的最快捷方式。
 
