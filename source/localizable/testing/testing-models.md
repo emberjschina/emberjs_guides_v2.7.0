@@ -1,14 +1,10 @@
-_Unit testing methods and computed properties follows previous patterns shown
-in [Unit Testing Basics] because DS.Model extends Ember.Object._
+_路由测试遵循在前面章节[Unit Testing Basics]介绍的单元测试和计算属性测试方法，因为Ember.Route继承至Ember.Object。_
 
-[Ember Data] Models can be tested using the `moduleForModel` helper.
+[Ember Data]模型测试使用`moduleForModel`助手。
 
-Let's assume we have a `Player` model that has `level` and `levelName`
-attributes. We want to call `levelUp()` to increment the `level` and assign a
-new `levelName` when the player reaches level 5.
+假设，有一个`Player`模型，它有两个属性`level`和`levelName`。我们想调用`levelUp()`方法去增加`level`值，并且当这个属性值达到5的时候设置`levelName`为一个新值。
 
-> You can follow along by generating your own model with `ember generate
-> model player`.
+> 创建模型使用命令`ember generate model player`。
 
 ```app/models/player.js
 export default DS.Model.extend({
@@ -24,8 +20,7 @@ export default DS.Model.extend({
 });
 ```
 
-Now let's create a test which will call `levelUp` on the player when they are
-level 4 to assert that the `levelName` changes. We will use `moduleForModel`:
+现在，我们创建测试，这个测试会调用`levelUp`方法，并且初始化`level`的值为4。使用`moduleForModel`实例化模型类：
 
 ```tests/unit/models/player-test.js
 import { moduleForModel, test } from 'ember-qunit';
@@ -48,15 +43,13 @@ test('should increment level when told to', function(assert) {
 });
 ```
 
-## Testing Relationships
+## 测试模型的关联关系
 
-For relationships you probably only want to test that the relationship
-declarations are setup properly.
+对于关联属性可能你只是想测试关系的设置是否是正确的。
 
-Assume that a `User` can own a `Profile`.
+假设一个`User`只能有一个`Profile`。
 
-> You can follow along by generating your own user and profile models with `ember
-> generate model user` and `ember generate model profile`.
+> 创建这两个模型可以用命令`ember generate model user`和`ember generate model profile`。
 
 ```app/models/profile.js
 export default DS.Model.extend({
@@ -69,8 +62,7 @@ export default DS.Model.extend({
 });
 ```
 
-Then you could test that the relationship is wired up correctly
-with this test.
+然后你可以这样测试这两个模型的关系是否是正确的。
 
 ```tests/unit/models/user-test.js
 import { moduleForModel, test } from 'ember-qunit';
@@ -94,6 +86,8 @@ _Ember Data contains extensive tests around the functionality of
 relationships, so you probably don't need to duplicate those tests.  You could
 look at the [Ember Data tests] for examples of deeper relationship testing if you
 feel the need to do it._
+
+_Ember Data包含了大量的关联关系测试，所以你不需要再去做重复的测试。如果有需要你可以查看[Ember Data tests]，它提供了更多更深层次的关联关系测试例子。_
 
 [Ember Data]: https://github.com/emberjs/data
 [Unit Testing Basics]: ../unit-testing-basics
