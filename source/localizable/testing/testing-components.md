@@ -1,11 +1,12 @@
-Components can be tested with integration tests using the `moduleForComponent` helper.
+组件测试使用`moduleForComponent`助手。
 
 Let's assume we have a component with a `style` property that is updated
 whenever the value of the `name` property changes. The `style` attribute of the
 component is bound to its `style` property.
 
-> You can follow along by generating your own component with `ember generate
-> component pretty-color`.
+假设有一个组件，这个组件有一个属性`style`，属性值的更新依赖于一个普通属性`name`。`style`属性绑定到组件的`style`属性（`div`的`style`属性）上。
+
+> 你可以使用命令`ember generate component pretty-color`生成一个组件。
 
 ```app/components/pretty-color.js
 export default Ember.Component.extend({
@@ -22,9 +23,7 @@ export default Ember.Component.extend({
 Pretty Color: {{name}}
 ```
 
-The `moduleForComponent` helper will find the component by name (`pretty-color`)
-and its template (if available).  Make sure to set `integration: true` to enable
-integration test capability.
+`moduleForComponent`会通过名字（`pretty-color`）查找组件和组件同名的组件模板（如果有）。请确定设置`integration: true`来启用集成测试。
 
 ```tests/integration/components/pretty-color-test.js
 moduleForComponent('pretty-color', 'Integration | Component | pretty color', {
@@ -32,12 +31,9 @@ moduleForComponent('pretty-color', 'Integration | Component | pretty color', {
 });
 ```
 
-Each test following the `moduleForComponent` call has access to the `render()`
-function, which lets us create a new instance of the component by declaring
-the component in template syntax, as we would in our application.
+在方法`moduleForComponent`中指定的组件都会在组件执行`render()`方法的时候被调用，在应用中，我们可以通过创建模板实例的语法来调用`render()`方法。
 
-We can test that changing the component's `name` property updates the
-component's `style` attribute and is reflected in the  rendered HTML:
+我下面代码测试改变组件属性`name`的值来改变组件`style`属性并且使得HTML代码重新刷新。
 
 ```tests/integration/components/pretty-color-test.js
 test('should change colors', function(assert) {
@@ -56,8 +52,7 @@ test('should change colors', function(assert) {
 });
 ```
 
-We might also test this component to ensure that the content of its template is
-being rendered properly:
+我们也可以测试这个组件，以确保它的模板内容是否被正确的渲染了：
 
 ```tests/integration/components/pretty-color-test.js
 test('should be rendered with its color name', function(assert) {
@@ -76,17 +71,14 @@ test('should be rendered with its color name', function(assert) {
 });
 ```
 
-### Testing User Interaction
+### 用户交互测试
 
-Components are a great way to create powerful, interactive, and self-contained
-custom HTML elements. It is important to test the component's methods _and_ the
-user's interaction with the component.
+组件是自定义创建强大、交互、完备HTML元素的最好方式。更重要的是测试组件的方法和用户与组件的交互。
 
-Imagine you have the following component that changes its title when a button is
-clicked on:
+想象你有如下一个组件，当用户点击按钮的时候改变它的标题：
 
-> You can follow along by generating your own component with `ember generate
-> component magic-title`.
+
+> 你可以用命令`ember generate component magic-title`创建组件。
 
 ```app/components/magic-title.js
 export default Ember.Component.extend({
@@ -108,8 +100,7 @@ export default Ember.Component.extend({
 </button>
 ```
 
-jQuery triggers can be used to simulate user interaction and test that the title
-is updated when the button is clicked on:
+jQuery触发器可以用与模拟用户交互已经测试点击按钮时更新标题的内容：
 
 ```tests/integration/components/magic-title-test.js
 test('should update title on button click', function(assert) {
@@ -126,16 +117,15 @@ test('should update title on button click', function(assert) {
 });
 ```
 
-### Testing Actions
+### 测试Action
 
-Components starting in Ember 2 utilize closure actions. Closure actions allow components
-to directly invoke functions provided by outer components.
+组件从Ember 2开始专门用于关闭action。关闭action允许组件后直接执行其他外部组件提供的方法。
 
-For example, imagine you have a comment form component that invokes a
-`submitComment` action when the form is submitted, passing along the form's data:
+> closure不知道怎么翻译，就直译为关闭了，也欢迎读者指正。
 
-> You can follow along by generating your own component with `ember generate
-> component comment-form`.
+比如，假设有一个表单组件，当用户提交表单的时候这个组件执行了一个`submitComment`动作，并且传递表单的数据：
+
+> 你可以使用命令`ember generate component comment-form`创建表单组件。
 
 ```app/components/comment-form.js
 export default Ember.Component.extend({
@@ -158,9 +148,7 @@ export default Ember.Component.extend({
 </form>
 ```
 
-Here's an example test that asserts that the specified `externalAction` function
-is invoked when the component's internal `submitComment` action is triggered by making use
-of a test double (dummy function):
+下面的是测试代码，测试实例中，当用户双击按钮时触发组件的`submitComment`动作，进而触发断言指定的`externalAction`方法：
 
 ```tests/integration/components/comment-form-test.js
 test('should trigger external action on form submit', function(assert) {
@@ -181,17 +169,12 @@ test('should trigger external action on form submit', function(assert) {
   this.$('input').click();
 });
 ```
-### Stubbing Services
 
-In cases where components have dependencies on Ember services, it is possible to stub these
-dependencies for integration tests. You stub Ember services by using the built-in `register()`
-function to register your stub service in place of the default.
+### 服务测试
 
-Imagine you have the following component that uses a location service to display the city
-and country of your current location:
+在实际情况中组件会依赖Ember的服务（`service`），这些服务可能是集成测试最底层的依赖。这些服务可以在组件中使用`register()`方法来注册。
 
-> You can follow along by generating your own component with `ember generate
-> component location-indicator`.
+> 你可以通过命令`ember generate component location-indicator`创建组件。
 
 ```app/components/location-indicator.js
 export default Ember.Component.extend({
@@ -211,10 +194,8 @@ export default Ember.Component.extend({
 ```app/templates/components/location-indicator.hbs
 You currently are located in {{city}}, {{country}}
 ```
-To stub the location service in your test, create a local stub object that extends
-`Ember.Service`, and register the stub as the service your tests need in the
-beforeEach function.  In this case we initially force location to New York.
 
+在上述代码中有个一个存根服务`locationService`，创建服务直接继承`Ember.Service`即可，然后在测试的`beforeEach()`方法中注册服务。在本测试中我们初始化为“New York”。
 
 ```tests/integration/components/location-indicator-test.js
 import { moduleForComponent, test } from 'ember-qunit';
@@ -250,8 +231,7 @@ moduleForComponent('location-indicator', 'Integration | Component | location ind
 });
 ```
 
-Once the stub service is registered the test simply needs to check that the stub data that
-is being returned from the service is reflected in the component output.
+服务一旦注册了测试只需要从存根数据中检查出来，然后绑定到组件输出的服务中返回。
 
 ```tests/integration/components/location-indicator-test.js
 test('should reveal current location', function(assert) {
@@ -262,6 +242,8 @@ test('should reveal current location', function(assert) {
 
 In the next example, we'll add another test that validates that the display changes
 when we modify the values on the service.
+
+在下面的例子中，我们会添加另一个测试例子用于验证当我们修改了服务值到时候显示的服务值是否改变。
 
 ```tests/integration/components/location-indicator-test.js
 test('should change displayed location when current location changes', function (assert) {
@@ -274,16 +256,16 @@ test('should change displayed location when current location changes', function 
 });
 ```
 
-### Waiting on Asynchronous Behavior
-Often, interacting with a component will cause asynchronous behavior to occur, such as HTTP requests, or timers.  The
-`wait` helper is designed to handle these scenarios, by providing a hook to ensure assertions are made after
-all Ajax requests and timers are complete.
+### 等待异步行为
+
+通常，与组件的交互会发生异步行为，比如HTTP请求、定时器。`wait`助手就是用于处理这种行为的，以确保Ajax请求或者定时器是否执行完成。
 
 Imagine you have a typeahead component that uses [`Ember.run.debounce`](http://emberjs.com/api/classes/Ember.run.html#method_debounce)
 to limit requests to the server, and you want to verify that results are displayed after typing a character.
 
-> You can follow along by generating your own component with `ember generate
-> component delayed-typeahead`.
+假设，你有一个typeahead组件，此组件用[`Ember.run.debounce`](http://emberjs.com/api/classes/Ember.run.html#method_debounce)限制服务器请求，然后你想验证后再输入一个字符。
+
+> 使用命令`ember generate component delayed-typeahead`创建组件。
 
 ```app/components/delayed-typeahead.js
 export default Ember.Component.extend({
@@ -305,8 +287,7 @@ export default Ember.Component.extend({
 </ul>
 ```
 
-In your integration test, use the `wait` function to wait until your debounce timer is up and then assert
-that the page is rendered appropriately.
+在集成测试中，使用`wait`方法等待定时器启动和页面完成渲染。
 
 ```tests/integration/components/delayed-typeahead-test.js
 import { moduleForComponent, test } from 'ember-qunit';
