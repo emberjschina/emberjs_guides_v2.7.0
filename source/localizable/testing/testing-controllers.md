@@ -1,16 +1,12 @@
-_Unit testing methods and computed properties follows previous patterns shown
-in [Unit Testing Basics] because Ember.Controller extends Ember.Object._
+_控制器测试遵循在前面章节[Unit Testing Basics]介绍的单元测试和计算属性测试方法，因为Ember.Controller继承至Ember.Object。_
 
-Unit testing controllers is very simple using the unit test helper which is part
-of the ember-qunit framework.
+对于ember-qunit框架来说使用测试助手来测试控制器是非常简单的。
 
-### Testing Controller Actions
+### 测试控制器动作
 
-Here we have a controller `PostsController` with two properties, a method that
-sets one of those properties, and an action named `setProps`.
+下面的例子中，有一个包含两个属性，一个设置属性的方法和一个名为`setProps`动作的控制器`PostsController`。
 
-> You can follow along by generating your own controller with `ember generate
-> controller posts`.
+> 你可以使用命令`ember generate controller posts`创建控制器。
 
 ```app/controllers/posts.js
 export default Ember.Controller.extend({
@@ -30,19 +26,14 @@ export default Ember.Controller.extend({
 });
 ```
 
-The `setProps` action directly sets one property, and calls the method to set the other.
-In our generated test, ember-cli already uses the `moduleFor` helper to set up a test
-container:
+`setProps`方法直接设置属性`propA`的值，然后调用方法`setPropB()`设置另一个属性值。在生成的测试中，Ember-cli通常用于生成`moduleFor`助手来启动容器的测试：
 
 ```tests/unit/controllers/posts-test.js
 moduleFor('controller:posts', {
 });
 ```
 
-Next we use `this.subject()` to get an instance of the `PostsController` and
-write a test to check the action. `this.subject()` is a helper method from the
-`ember-qunit` library that returns a singleton instance of the module set up
-using `moduleFor`.
+接下来，我们用`this.subject()`获取控制器`PostsController`的实例，然后写一个测试来检查动作。`this.subject()`是一个测试助手，此测试助手来至`ember-qunit`库，并且返回的是从`moduleFor`启动的单例。
 
 ```tests/unit/controllers/posts-test.js
 test('should update A and B on setProps action', function(assert) {
@@ -66,14 +57,11 @@ test('should update A and B on setProps action', function(assert) {
 });
 ```
 
-### Testing Controller Needs
+### 嵌套控制器测试
 
-Sometimes controllers have dependencies on other controllers. This is
-accomplished by injecting one controller into another. For example, here are two simple controllers. The
-`CommentsController` uses the `PostController` via `inject`:
+有时候，一个控制器内部还可能依赖另一个控制器。这情况是通过一个控制器注入到另一个实现的。例如，有两个简单的控制器。控制器`CommentsController`通过注入（`inject`）方式注入到控制器`PostController`中：
 
-> You can follow along by generating your own controller with `ember generate
-> controller post`, and `ember generate controller comments`.
+> 执行命令`ember generate controller post`和`ember generate controller comments`生成控制器。
 
 ```app/controllers/post.js
 export default Ember.Controller.extend({
@@ -88,8 +76,7 @@ export default Ember.Controller.extend({
 });
 ```
 
-This time when we setup our `moduleFor` we need to pass an options object as
-our third argument that has the controller's `needs`.
+这种情况下，我们需要在方法`moduleFor`中通过第三个可选的参数来启动这2个控制器。
 
 ```tests/unit/controllers/comments-test.js
 moduleFor('controller:comments', 'Comments Controller', {
@@ -97,8 +84,7 @@ moduleFor('controller:comments', 'Comments Controller', {
 });
 ```
 
-Now let's write a test that sets a property on our `post` model in the
-`PostController` that would be available on the `CommentsController`.
+现在写一个测试示例，在控制器`PostController`设置`post`模型的属性，这个属性在控制器`CommentsController`中也是可以使用的。
 
 ```tests/unit/controllers/comments-test.js
 test('should modify the post model', function(assert) {
